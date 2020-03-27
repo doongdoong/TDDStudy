@@ -14,6 +14,7 @@ import java.util.List;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
 public class RestaurantServiceTests {
@@ -62,10 +63,19 @@ public class RestaurantServiceTests {
     @Test
     public void getRestaurant() {
         Restaurant restaurant = restaurantService.getRestaurant(1004L);
-
         assertThat(restaurant.getId(), is(1004L));
 
         MenuItem menuItem =  restaurant.getMenuItems().get(0);
         assertThat(menuItem.getName(), is("kimchi"));
+    }
+
+    @Test
+    public void addRestaurant() {
+        Restaurant restaurant = new Restaurant("BeRyong", "Busan");
+        Restaurant saved = new Restaurant(1234L, "BeRyong", "Busan");
+        given(restaurantRepository.save(any())).willReturn(saved);
+        Restaurant created = restaurantService.addRestaurant(restaurant);
+
+        assertThat(created.getId(), is(1234L));
     }
 }
