@@ -11,6 +11,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
@@ -41,7 +42,7 @@ public class RestaurantServiceTests {
         restaurants.add(restaurant);
 
         given(restaurantRepository.findAll()).willReturn(restaurants);
-        given(restaurantRepository.findById(1004L)).willReturn(restaurant);
+        given(restaurantRepository.findById(1004L)).willReturn(Optional.of(restaurant));
     }
 
     private void mockMenuItemRepository() {
